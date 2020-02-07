@@ -16,6 +16,7 @@ export default () => async (expression: string): Promise<string> => {
 			const parsingData = parse(expression);
 			const converted = cashify.convert(expression);
 
+			/* istanbul ignore next */
 			return `${currency(converted).format()} ${parsingData.to ?? ''}`;
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (error) {
