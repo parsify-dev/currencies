@@ -1,28 +1,24 @@
-import fetch from 'isomorphic-unfetch';
 import {Cashify, parse} from 'cashify';
 import currency from 'currency.js';
 
-import currencies from './lib/currencies';
+interface Rates {
+	[name: string]: number;
+}
+interface Options {
+	base: string;
+	rates: Rates;
+}
 
-export default () => async (expression: string): Promise<string> => {
-	const regex = new RegExp(currencies.join('|'), 'i');
+export default ({base, rates}: Options) => async (expression: string): Promise<string> => {
+	try {
+		const cashify = new Cashify({base, rates});
+		const parsingData = parse(expression);
+		const converted = cashify.convert(expression);
 
-	if (regex.test(expression)) {
-		try {
-			const data = await fetch('https://api.exchangeratesapi.io/latest').then((r: any) => r.json());
-			const {base, rates} = data;
+		return `${currency(converted).format()} ${parsingData.to ?? ''}`;
 
-			const cashify = new Cashify({base, rates});
-			const parsingData = parse(expression);
-			const converted = cashify.convert(expression);
-
-			/* istanbul ignore next */
-			return `${currency(converted).format()} ${parsingData.to ?? ''}`;
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		} catch (error) {
-			return expression;
-		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	} catch (error) {
+		return expression;
 	}
-
-	return expression;
 };
