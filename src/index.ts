@@ -15,6 +15,7 @@ export default ({base, rates}: Options) => async (expression: string): Promise<s
 		const parsingData = parse(expression);
 		const converted = cashify.convert(expression);
 
+		/* istanbul ignore next */
 		return `${currency(converted).format()} ${parsingData.to ?? ''}`;
 
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
