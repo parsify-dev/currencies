@@ -1,6 +1,6 @@
 {
     "name": "@parsify/currencies",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Parsify plugin for currency conversion",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
