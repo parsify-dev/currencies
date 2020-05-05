@@ -1,4 +1,4 @@
-**Note: you should use [@parsify/math](https://github.com/parsify-dev/math) if possible**
+**Note: you should use [@parsify/math](https://github.com/parsify-dev/math) if possible.**
 
 ---
 
